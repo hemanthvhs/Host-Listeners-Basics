@@ -1,27 +1,55 @@
-# Hostlisteners
+HOSTLISTENERS
+------------------------
+Ref Links
+-------------
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+https://medium.com/claritydesignsystem/four-ways-of-listening-to-dom-events-in-angular-part-1-event-binding-3ec7e9f51a1d
 
-## Development server
+https://medium.com/claritydesignsystem/four-ways-of-listening-to-dom-events-in-angular-part-2-hostlistener-1b66d45b3e3d
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+https://stackblitz.com/edit/zone-detector-no-hostlistener-xkpmco?file=app%2Fclick-catcher.directive.ts
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+@HostListener is Angular’s decorator method that’s used for listening to DOM events on the host element 
+of both component and attribute directives.
+@HostListener sets the listeners once the directive is initialized and removes them automatically once 
+the directive gets destroyed.
+@HostListener catches and listens to events from children or nested elements when they bubble up to the 
+host element. Moreover, you can listen to events on global elements, but you should do so sparingly for
+performance reasons.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Note :
 
-## Running unit tests
+Wheneve a click is happened,
+ 
+Scenario-1 :
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+<p (click) = onClick($event) > Click On Me ! </p>    // Here  onClick is the handler function 
+						        $event -> event payload object ; which is passed as an argument to the onClick handler function
 
-## Running end-to-end tests
+Now, in the component class you can access the event payload object
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+onClick(e : any) {
+	console.log(e)          // outputs as MouseEvent
+	console.log(e.target)   // Provides all the details about the element where click happened
+}
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Scenario-2 :
+
+<p clickcatcher > Click On Me ! </p>     // clickcatcher -> attribute directive
+
+Now, in the ClickCatcherDirecive ,
+
+@HostListener('click', ['$event']) onClick(e : any) {
+
+	console.log(e)		// outputs as MouseEvent
+	console.log(e.target)   // Provides all the details about the element where click happened
+}
+
+Note : 
+--------
+
+In order to get the event payload object , we need to use ['$event'] & catch that in a function (eg : OnClick())
+
