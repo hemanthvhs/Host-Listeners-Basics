@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
+import { ClickCatcherDirective } from './clickcatcher.directive';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,ClickCatcherDirective
   ],
   imports: [
     BrowserModule
